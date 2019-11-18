@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Clover</string>
+    <string name="title_memory">Memory Game</string>
+    <string name="MENU_OBJECT">4 X4</string>
+</resources>
