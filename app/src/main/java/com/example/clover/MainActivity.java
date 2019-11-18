@@ -26,7 +26,11 @@ import android.widget.EditText;
                 if(value.contains("12")) {
                     Intent intent = new Intent(MainActivity.this, Game.class);
                     startActivity(intent);
+                }else{
+                    Intent intent = new Intent(MainActivity.this, Game.class);
+                    startActivity(intent);
                 }
+
             }
         });
     }

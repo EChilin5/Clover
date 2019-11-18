@@ -25,14 +25,5 @@
         android:paddingLeft="20dp"
         android:text="player 1 : 0" />
 
-    <TextView
-        android:id="@+id/text_p2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:textSize="30sp"
-        android:layout_alignParentEnd="true"
-        android:paddingRight="20dp"
-        android:text="player 2 : 0" />
+
 </RelativeLayout>
