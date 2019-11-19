@@ -16,16 +16,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Game extends AppCompatActivity {
 
     TextView text_p1, text_p2;
     ImageView cover1, cover2, cover3, cover4,cover5,cover6,cover7,cover8, cover9,cover10,
-    cover11,cover12;
+    cover11,cover12, cover13, cover14, cover15, cover16, cover17, cover18, cover19, cover20;
+    LinkedList<Integer> link_list = new LinkedList<Integer>();
+
 
     Integer[] cardArray = {101, 102,103,104, 105,106, 201, 202,203,204, 205,206};
 
@@ -46,7 +46,6 @@ public class Game extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
             text_p1 = (TextView) findViewById(R.id.text_p1);
-            text_p2 = (TextView) findViewById(R.id.text_p2);
 
             cover1 = (ImageView) findViewById(R.id.cover1);
             cover2 = (ImageView) findViewById(R.id.cover2);
@@ -176,7 +175,7 @@ public class Game extends AppCompatActivity {
             // frontOfCardsResources();
             // Collections.shuffle(Arrays.asList(cardArray));
 
-            text_p2.setTextColor(Color.GRAY);
+        //    text_p2.setTextColor(Color.GRAY);
 
             cover1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -427,10 +426,6 @@ public class Game extends AppCompatActivity {
                     playerPoints++;
                     text_p1.setText("Player 1: " +playerPoints);
                     turn = 2;
-                } else if(turn == 2){
-                    cpuPoints++;
-                    text_p2.setText("Player 2: " + cpuPoints);
-                    turn = 1;
                 }
         }else{
             cover1.setImageResource(R.drawable.code);
@@ -449,11 +444,7 @@ public class Game extends AppCompatActivity {
             if(turn == 1){
                 turn = 2;
                 text_p1.setTextColor(Color.GREEN);
-                text_p2.setTextColor(Color.RED);
-            } else if(turn == 2){
-                turn = 1;
-                text_p2.setTextColor(Color.GREEN);
-                text_p1.setTextColor(Color.RED);
+
             }
 
         }

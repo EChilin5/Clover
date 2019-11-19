@@ -30,10 +30,18 @@
 
     <Button
         android:id="@+id/button_4x4"
+        android:onClick="NextScreen"
         android:layout_width="259dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="@string/MENU_OBJECT"
         android:textSize="26sp" />
+
+    <Button
+        android:id="@+id/buttonPlay"
+        android:layout_width="250dp"
+        android:onClick="playIt"
+        android:layout_height="wrap_content"
+        android:text="Play" />
 
 </LinearLayout>
