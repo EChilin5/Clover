@@ -561,7 +561,13 @@ public class Game extends AppCompatActivity {
         outState.getInt("location9", cardArray[9]);
         outState.getInt("location10", cardArray[10]);
         outState.getInt("location11", cardArray[11]);
+    }
 
+
+    public void onPause(){
+        super.onPause();
+        MainActivity act =  new MainActivity();
+        act.onPause();
     }
 
 }

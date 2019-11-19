@@ -42,7 +42,10 @@ import android.widget.EditText;
     public void playIt(View v){
         mySong.start();
     }
-
+    public void onPause(){
+        super.onPause();
+        mySong.release();
+    }
 
      public void NextScreen(View view) {
          EditText editText = (EditText) findViewById(R.id.edittext);
