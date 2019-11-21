@@ -46,9 +46,10 @@ public class Game extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
             text_p1 = (TextView) findViewById(R.id.text_p1);
-
             cover1 = (ImageView) findViewById(R.id.cover1);
+           //z cover1.getLayoutParams().width = 20;
             cover2 = (ImageView) findViewById(R.id.cover2);
+            //cover2.getLayoutParams().width =100;
             cover3 = (ImageView) findViewById(R.id.cover3);
             cover4 = (ImageView) findViewById(R.id.cover4);
             cover5 = (ImageView) findViewById(R.id.cover5);
@@ -74,20 +75,6 @@ public class Game extends AppCompatActivity {
             cover12.setTag("11");
 
         if(savedInstanceState != null){
-
-         /*   cardArray[0] = savedInstanceState.getInt("location0");
-            cardArray[1] = savedInstanceState.getInt("location1");
-            cardArray[2] = savedInstanceState.getInt("location2");
-            cardArray[3] = savedInstanceState.getInt("location3");
-            cardArray[4] = savedInstanceState.getInt("location4");
-            cardArray[5] = savedInstanceState.getInt("location5");
-            cardArray[6] = savedInstanceState.getInt("location6");
-            cardArray[7] = savedInstanceState.getInt("location7");
-            cardArray[8] = savedInstanceState.getInt("location8");
-            cardArray[9] = savedInstanceState.getInt("location9");
-            cardArray[10] = savedInstanceState.getInt("location10");
-            cardArray[11] = savedInstanceState.getInt("location11");
-           */ //////////////////////////////////////////////////////////////////////////
             boolean met1 = savedInstanceState.getBoolean("state1");
             boolean met2 = savedInstanceState.getBoolean("state2");
             boolean met3 = savedInstanceState.getBoolean("state3");
@@ -290,8 +277,6 @@ public class Game extends AppCompatActivity {
         }else if(cardArray[num] == 206){
             cover.setImageResource(image206);
         }
-
-
         if(cardNumber == 1){
             firstCard = cardArray[num];
             if(firstCard >200){
@@ -307,20 +292,7 @@ public class Game extends AppCompatActivity {
             }
             cardNumber =1 ;
             clickedSecond = num;
-
-            cover1.setEnabled(false);
-            cover2.setEnabled(false);
-            cover3.setEnabled(false);
-            cover4.setEnabled(false);
-            cover5.setEnabled(false);
-            cover6.setEnabled(false);
-            cover7.setEnabled(false);
-            cover8.setEnabled(false);
-            cover9.setEnabled(false);
-            cover10.setEnabled(false);
-            cover11.setEnabled(false);
-            cover12.setEnabled(false);
-
+            Enable(false);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -344,122 +316,21 @@ public class Game extends AppCompatActivity {
     private void calculate(){
 
         if(firstCard == secondCard){
-            if(clickedFirst == 0 ){
-                cover1.setVisibility(View.INVISIBLE);
-                cover1.setEnabled(false);
-                visible1 = true;
-            } else if(clickedFirst == 1){
-                cover2.setVisibility(View.INVISIBLE);
-                cover1.setEnabled(false);
-                visible2 = true;
-            } else if(clickedFirst == 2){
-                cover3.setVisibility(View.INVISIBLE);
-                visible3 = true;
-            } else if(clickedFirst == 3){
-                cover4.setVisibility(View.INVISIBLE);
-                visible4 = true;
-            } else if(clickedFirst == 4){
-                cover5.setVisibility(View.INVISIBLE);
-                visible5 = true;
-            } else if(clickedFirst == 5){
-                cover6.setVisibility(View.INVISIBLE);
-                visible6= true;
-            } else if(clickedFirst == 6){
-                cover7.setVisibility(View.INVISIBLE);
-                visible7 = true;
-            } else if(clickedFirst == 7){
-                cover8.setVisibility(View.INVISIBLE);
-                visible8 = true;
-            } else if(clickedFirst == 8){
-                cover9.setVisibility(View.INVISIBLE);
-                visible9 = true;
-            } else if(clickedFirst == 9){
-                cover10.setVisibility(View.INVISIBLE);
-                visible10 = true;
-            } else if(clickedFirst == 10){
-                cover11.setVisibility(View.INVISIBLE);
-                visible11 = true;
-            } else if(clickedFirst == 11){
-                cover12.setVisibility(View.INVISIBLE);
-                visible12 = true;
-            }
-            if(clickedSecond == 0){
-                    cover1.setVisibility(View.INVISIBLE);
-                visible1 = true;
-            } else if(clickedSecond == 1){
-                    cover2.setVisibility(View.INVISIBLE);
-                visible2 = true;
-
-            } else if(clickedSecond == 2){
-                    cover3.setVisibility(View.INVISIBLE);
-                visible3 = true;
-            } else if(clickedSecond == 3){
-                    cover4.setVisibility(View.INVISIBLE);
-                visible4 = true;
-            } else if(clickedSecond == 4){
-                    cover5.setVisibility(View.INVISIBLE);
-                    visible5 = true;
-                } else if(clickedSecond == 5){
-                    cover6.setVisibility(View.INVISIBLE);
-                    visible6 = true;
-                } else if(clickedSecond == 6){
-                    cover7.setVisibility(View.INVISIBLE);
-                    visible7 = true;
-                } else if(clickedSecond == 7){
-                    cover8.setVisibility(View.INVISIBLE);
-                    visible8 = true;
-                } else if(clickedSecond == 8){
-                    cover9.setVisibility(View.INVISIBLE);
-                    visible9 = true;
-                } else if(clickedSecond == 9){
-                    cover10.setVisibility(View.INVISIBLE);
-                    visible10 = true;
-                } else if(clickedSecond == 10){
-                    cover11.setVisibility(View.INVISIBLE);
-                    visible11 = true;
-                } else if(clickedSecond == 11){
-                    cover12.setVisibility(View.INVISIBLE);
-                    visible12 = true;
-                }
-
-                if(turn == 1){
+            stateChange(clickedFirst);
+            stateChange(clickedSecond);
                     playerPoints++;
                     text_p1.setText("Player 1: " +playerPoints);
-                    turn = 2;
-                }
+                    text_p1.setTextColor(Color.GREEN);
+
         }else{
-            cover1.setImageResource(R.drawable.code);
-            cover2.setImageResource(R.drawable.code);
-            cover3.setImageResource(R.drawable.code);
-            cover4.setImageResource(R.drawable.code);
-            cover5.setImageResource(R.drawable.code);
-            cover6.setImageResource(R.drawable.code);
-            cover7.setImageResource(R.drawable.code);
-            cover8.setImageResource(R.drawable.code);
-            cover9.setImageResource(R.drawable.code);
-            cover10.setImageResource(R.drawable.code);
-            cover11.setImageResource(R.drawable.code);
-            cover12.setImageResource(R.drawable.code);
-
-            if(turn == 1){
-                turn = 2;
-                text_p1.setTextColor(Color.GREEN);
-
-            }
-
+            reset();
+                if(playerPoints > 0){
+                    playerPoints--;
+                    text_p1.setText("Player 1: " +playerPoints);
+                    text_p1.setTextColor(Color.RED);
+                }
         }
-        cover1.setEnabled(true);
-        cover2.setEnabled(true);
-        cover3.setEnabled(true);
-        cover4.setEnabled(true);
-        cover5.setEnabled(true);
-        cover6.setEnabled(true);
-        cover7.setEnabled(true);
-        cover8.setEnabled(true);
-        cover9.setEnabled(true);
-        cover10.setEnabled(true);
-        cover11.setEnabled(true);
-        cover12.setEnabled(true);
+        Enable(true);
         checkEnd();
     }
     private void checkEnd(){
@@ -531,6 +402,75 @@ public class Game extends AppCompatActivity {
         cover10.startAnimation(rotateAnimation);
         cover11.startAnimation(rotateAnimation);
         cover12.startAnimation(rotateAnimation);
+    }
+
+    public void Enable(boolean set){
+        cover1.setEnabled(set);
+        cover2.setEnabled(set);
+        cover3.setEnabled(set);
+        cover4.setEnabled(set);
+        cover5.setEnabled(set);
+        cover6.setEnabled(set);
+        cover7.setEnabled(set);
+        cover8.setEnabled(set);
+        cover9.setEnabled(set);
+        cover10.setEnabled(set);
+        cover11.setEnabled(set);
+        cover12.setEnabled(set);
+    }
+    public void reset(){
+        cover1.setImageResource(R.drawable.code);
+        cover2.setImageResource(R.drawable.code);
+        cover3.setImageResource(R.drawable.code);
+        cover4.setImageResource(R.drawable.code);
+        cover5.setImageResource(R.drawable.code);
+        cover6.setImageResource(R.drawable.code);
+        cover7.setImageResource(R.drawable.code);
+        cover8.setImageResource(R.drawable.code);
+        cover9.setImageResource(R.drawable.code);
+        cover10.setImageResource(R.drawable.code);
+        cover11.setImageResource(R.drawable.code);
+        cover12.setImageResource(R.drawable.code);
+    }
+
+    public void stateChange(int check){
+        if(check == 0){
+            cover1.setVisibility(View.INVISIBLE);
+            visible1 = true;
+        } else if(check == 1){
+            cover2.setVisibility(View.INVISIBLE);
+            visible2 = true;
+        } else if(check == 2){
+            cover3.setVisibility(View.INVISIBLE);
+            visible3 = true;
+        } else if(check == 3){
+            cover4.setVisibility(View.INVISIBLE);
+            visible4 = true;
+        } else if(check == 4){
+            cover5.setVisibility(View.INVISIBLE);
+            visible5 = true;
+        } else if(check == 5){
+            cover6.setVisibility(View.INVISIBLE);
+            visible6 = true;
+        } else if(check == 6){
+            cover7.setVisibility(View.INVISIBLE);
+            visible7 = true;
+        } else if(check == 7){
+            cover8.setVisibility(View.INVISIBLE);
+            visible8 = true;
+        } else if(check == 8){
+            cover9.setVisibility(View.INVISIBLE);
+            visible9 = true;
+        } else if(check == 9){
+            cover10.setVisibility(View.INVISIBLE);
+            visible10 = true;
+        } else if(check == 10){
+            cover11.setVisibility(View.INVISIBLE);
+            visible11 = true;
+        } else if(check == 11){
+            cover12.setVisibility(View.INVISIBLE);
+            visible12 = true;
+        }
 
     }
     @Override
@@ -549,25 +489,5 @@ public class Game extends AppCompatActivity {
         outState.putBoolean("state11", visible11);
         outState.putBoolean("state12", visible12);
         /////////////////////////////////////////////////////////////////////
-        outState.getInt("location0", cardArray[0]);
-        outState.getInt("location1", cardArray[1]);
-        outState.getInt("location2", cardArray[2]);
-        outState.getInt("location3", cardArray[3]);
-        outState.getInt("location4", cardArray[4]);
-        outState.getInt("location5", cardArray[5]);
-        outState.getInt("location6", cardArray[6]);
-        outState.getInt("location7", cardArray[7]);
-        outState.getInt("location8", cardArray[8]);
-        outState.getInt("location9", cardArray[9]);
-        outState.getInt("location10", cardArray[10]);
-        outState.getInt("location11", cardArray[11]);
     }
-
-
-    public void onPause(){
-        super.onPause();
-        MainActivity act =  new MainActivity();
-        act.onPause();
-    }
-
 }
