@@ -30,7 +30,8 @@ public class Game extends AppCompatActivity {
     LinkedList<Integer> link_list = new LinkedList<Integer>();
 
     Integer[] cardArray = {101, 102,103,104, 105,106, 201, 202,203,204, 205,206};
-    Integer[] copy = new Integer[cardArray.length];
+    Integer[] copy;
+    Integer[] set;
 
     int image101, image102,image103, image104, image105, image106,
             image201, image202,image203, image204, image205, image206;
@@ -41,16 +42,17 @@ public class Game extends AppCompatActivity {
     int clickedFirst, clickedSecond;
     int cardNumber = 1;
     int playerPoints =0, cpuPoints =0;
-    int turn =1;
+    int size;
+
     Animation rotateAnimation;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
             String data = getIntent().getStringExtra("size_key");
         data = data.replaceAll("\\s", "");
-        int size = Integer.parseInt(data);
-
+        size = Integer.parseInt(data);
             text_p1 = (TextView) findViewById(R.id.text_p1);
             cover1 = (ImageView) findViewById(R.id.cover1);
            //z cover1.getLayoutParams().width = 20;
@@ -79,7 +81,21 @@ public class Game extends AppCompatActivity {
             cover10.setTag("9");
             cover11.setTag("10");
             cover12.setTag("11");
-        setView(size);
+     //   setView(size);
+        setViewV2(cover1);
+        setViewV2(cover2);
+        setViewV2(cover3);
+        setViewV2(cover4);
+        setViewV2(cover5);
+        setViewV2(cover6);
+        setViewV2(cover7);
+        setViewV2(cover8);
+        setViewV2(cover9);
+        setViewV2(cover10);
+        setViewV2(cover11);
+        setViewV2(cover12);
+
+
         if(savedInstanceState != null) {
             boolean met1 = savedInstanceState.getBoolean("state1");
             boolean met2 = savedInstanceState.getBoolean("state2");
@@ -159,8 +175,9 @@ public class Game extends AppCompatActivity {
 
         }else{
             // Collections.shuffle(Arrays.asList(cardArray));
-            shuffleCards();
-            getCard(size);
+            shuffleCards(size);
+           // shuffleCards2(size);
+
         }
 
         frontOfCardsResources();
@@ -263,6 +280,18 @@ public class Game extends AppCompatActivity {
             });*/
     }
 
+    private void setViewV2(ImageView cover){
+        int theCard = Integer.parseInt((String) cover.getTag());
+        if(theCard < size){
+            cover.setEnabled(true);
+            cover.setVisibility(View.VISIBLE);
+        }else{
+            cover.setEnabled(false);
+            cover.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
 
     private void setView(int size){
        invisible();
@@ -335,29 +364,29 @@ public class Game extends AppCompatActivity {
     private void doStuff(ImageView cover, int num){
         //rotateAnimation = AnimationUtils.loadAnimation(this,R.anim.rotate);
        // cover.startAnimation(rotateAnimation);
-        if(cardArray[num] == 101){
+        if(copy[num] == 101){
             cover.setImageResource(image101);
-        }else if(cardArray[num] == 102){
+        }else if(copy[num] == 102){
             cover.setImageResource(image102);
         }else if(cardArray[num] == 103){
             cover.setImageResource(image103);
-        }else if(cardArray[num] == 104){
+        }else if(copy[num] == 104){
             cover.setImageResource(image104);
-        }else if(cardArray[num] == 105){
+        }else if(copy[num] == 105){
             cover.setImageResource(image105);
-        }else if(cardArray[num] == 106){
+        }else if(copy[num] == 106){
             cover.setImageResource(image106);
-        }else if(cardArray[num] == 201){
+        }else if(copy[num] == 201){
             cover.setImageResource(image201);
-        }else if(cardArray[num] == 202){
+        }else if(copy[num] == 202){
             cover.setImageResource(image202);
-        }else if(cardArray[num] == 203){
+        }else if(copy[num] == 203){
             cover.setImageResource(image203);
-        }else if(cardArray[num] == 204){
+        }else if(copy[num] == 204){
             cover.setImageResource(image204);
-        }else if(cardArray[num] == 205){
+        }else if(copy[num] == 205){
             cover.setImageResource(image205);
-        }else if(cardArray[num] == 206){
+        }else if(copy[num] == 206){
             cover.setImageResource(image206);
         }
         if(cardNumber == 1){
@@ -386,7 +415,7 @@ public class Game extends AppCompatActivity {
         }
     }
 
-    private void shuffleCards(){
+    private void shuffleCards(int size){
         int temp, index;
         Random random = new Random();
         for(int i = cardArray.length-1; i> 0; i--){
@@ -395,20 +424,27 @@ public class Game extends AppCompatActivity {
             cardArray[index] = cardArray[i];
             cardArray[i] = temp;
         }
+        getCard(size);
     }
     private void getCard(int size){
+
         int count = 0;
-        for(int i = (size/2) -1; i < size; i++){
+        copy = new Integer[size];
+        for(int i = (size/2); i < size; i++){
                  if(cardArray[count] > 100 && cardArray[count] < 200){
                      cardArray[i] = cardArray[count] +100;
-                 }else if(cardArray[count] < 200){
+                 }else if(cardArray[count] > 200){
                      cardArray[i] = cardArray[count] -100;
                  }
                  count++;
         }
-    }
-    private void calculate(){
+        for(int i=0; i < size; i++){
+            copy[i] =cardArray[i];
+        }
 
+    }
+
+    private void calculate(){
         if(firstCard == secondCard){
             stateChange(clickedFirst);
             stateChange(clickedSecond);
@@ -470,6 +506,7 @@ public class Game extends AppCompatActivity {
         image104 = R.drawable.lion;
         image105 = R.drawable.monkey;
         image106 = R.drawable.wolf;
+
         image201 = R.drawable.camel1;
         image202 = R.drawable.coala1;
         image203 = R.drawable.fox1;
@@ -597,6 +634,5 @@ public class Game extends AppCompatActivity {
         outState.putBoolean("state11", visible11);
         outState.putBoolean("state12", visible12);
         /////////////////////////////////////////////////////////////////////
-       // outState.putIntArray("currentArr", cardArray);
     }
 }
