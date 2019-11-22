@@ -194,90 +194,7 @@ public class Game extends AppCompatActivity {
         ButtonEvent(cover11);
         ButtonEvent(cover12);
 
-        /*    cover1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover1, theCard);
-                }
-            });
-            cover2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover2, theCard);
-                }
-            });
-            cover3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover3, theCard);
-                }
-            });
-            cover4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover4, theCard);
-                }
-            });
-            cover5.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover5, theCard);
-                }
-            });
-            cover6.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover6, theCard);
-                }
-            });
-            cover7.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover7, theCard);
-                }
-            });
-            cover8.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover8, theCard);
-                }
-            });
-            cover9.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover9, theCard);
-                }
-            });
-            cover10.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover10, theCard);
-                }
-            });
-            cover11.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover11, theCard);
-                }
-            });
-            cover12.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int theCard = Integer.parseInt((String) view.getTag());
-                    doStuff(cover12, theCard);
-                }
-            });*/
+
     }
 
     private void setViewV2(ImageView cover){
@@ -292,66 +209,6 @@ public class Game extends AppCompatActivity {
 
     }
 
-
-    private void setView(int size){
-       invisible();
-        if(size ==  4){
-            cover1.setVisibility(View.VISIBLE);
-            cover2.setVisibility(View.VISIBLE);
-            cover3.setVisibility(View.VISIBLE);
-            cover4.setVisibility(View.VISIBLE);
-        }else if(size == 6){
-            cover1.setVisibility(View.VISIBLE);
-            cover2.setVisibility(View.VISIBLE);
-            cover3.setVisibility(View.VISIBLE);
-            cover4.setVisibility(View.VISIBLE);
-            cover5.setVisibility(View.VISIBLE);
-            cover6.setVisibility(View.VISIBLE);
-        }else if(size == 8){
-            cover1.setVisibility(View.VISIBLE);
-            cover2.setVisibility(View.VISIBLE);
-            cover3.setVisibility(View.VISIBLE);
-            cover4.setVisibility(View.VISIBLE);
-            cover5.setVisibility(View.VISIBLE);
-            cover6.setVisibility(View.VISIBLE);
-            cover7.setVisibility(View.VISIBLE);
-            cover8.setVisibility(View.VISIBLE);
-        }else if(size == 10){
-            cover1.setVisibility(View.VISIBLE);
-            cover2.setVisibility(View.VISIBLE);
-            cover3.setVisibility(View.VISIBLE);
-            cover4.setVisibility(View.VISIBLE);
-            cover5.setVisibility(View.VISIBLE);
-            cover6.setVisibility(View.VISIBLE);
-            cover7.setVisibility(View.VISIBLE);
-            cover8.setVisibility(View.VISIBLE);
-            cover9.setVisibility(View.VISIBLE);
-            cover10.setVisibility(View.VISIBLE);
-        }else if(size == 12){
-            cover1.setVisibility(View.VISIBLE);
-            cover2.setVisibility(View.VISIBLE);
-            cover3.setVisibility(View.VISIBLE);
-            cover4.setVisibility(View.VISIBLE);
-            cover5.setVisibility(View.VISIBLE);
-            cover6.setVisibility(View.VISIBLE);
-            cover7.setVisibility(View.VISIBLE);
-            cover8.setVisibility(View.VISIBLE);
-            cover9.setVisibility(View.VISIBLE);
-            cover10.setVisibility(View.VISIBLE);
-            cover11.setVisibility(View.VISIBLE);
-            cover12.setVisibility(View.VISIBLE);
-
-        }else if(size == 14){
-
-        }else if(size == 16){
-
-        }else if(size == 18){
-
-        }else if(size == 20){
-
-        }
-
-    }
     private  void ButtonEvent(final ImageView cover){
         cover.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -426,8 +283,8 @@ public class Game extends AppCompatActivity {
         }
         getCard(size);
     }
-    private void getCard(int size){
 
+    private void getCard(int size){
         int count = 0;
         copy = new Integer[size];
         for(int i = (size/2); i < size; i++){
@@ -441,7 +298,6 @@ public class Game extends AppCompatActivity {
         for(int i=0; i < size; i++){
             copy[i] =cardArray[i];
         }
-
     }
 
     private void calculate(){
@@ -616,7 +472,6 @@ public class Game extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
