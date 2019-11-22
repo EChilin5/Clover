@@ -19,6 +19,9 @@ import android.widget.TextView;
 import java.util.LinkedList;
 import java.util.Random;
 
+// grab first 2 parts of random array then add 100 or subtract 100
+
+
 public class Game extends AppCompatActivity {
 
     TextView text_p1, text_p2;
@@ -26,8 +29,8 @@ public class Game extends AppCompatActivity {
     cover11,cover12, cover13, cover14, cover15, cover16, cover17, cover18, cover19, cover20;
     LinkedList<Integer> link_list = new LinkedList<Integer>();
 
-
     Integer[] cardArray = {101, 102,103,104, 105,106, 201, 202,203,204, 205,206};
+    Integer[] copy = new Integer[cardArray.length];
 
     int image101, image102,image103, image104, image105, image106,
             image201, image202,image203, image204, image205, image206;
@@ -44,6 +47,9 @@ public class Game extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+            String data = getIntent().getStringExtra("size_key");
+        data = data.replaceAll("\\s", "");
+        int size = Integer.parseInt(data);
 
             text_p1 = (TextView) findViewById(R.id.text_p1);
             cover1 = (ImageView) findViewById(R.id.cover1);
@@ -73,8 +79,8 @@ public class Game extends AppCompatActivity {
             cover10.setTag("9");
             cover11.setTag("10");
             cover12.setTag("11");
-
-        if(savedInstanceState != null){
+        setView(size);
+        if(savedInstanceState != null) {
             boolean met1 = savedInstanceState.getBoolean("state1");
             boolean met2 = savedInstanceState.getBoolean("state2");
             boolean met3 = savedInstanceState.getBoolean("state3");
@@ -154,17 +160,24 @@ public class Game extends AppCompatActivity {
         }else{
             // Collections.shuffle(Arrays.asList(cardArray));
             shuffleCards();
+            getCard(size);
         }
 
-
         frontOfCardsResources();
-            //load cards
-            // frontOfCardsResources();
-            // Collections.shuffle(Arrays.asList(cardArray));
+        ButtonEvent(cover1);
+        ButtonEvent(cover2);
+        ButtonEvent(cover3);
+        ButtonEvent(cover4);
+        ButtonEvent(cover5);
+        ButtonEvent(cover6);
+        ButtonEvent(cover7);
+        ButtonEvent(cover8);
+        ButtonEvent(cover9);
+        ButtonEvent(cover10);
+        ButtonEvent(cover11);
+        ButtonEvent(cover12);
 
-        //    text_p2.setTextColor(Color.GRAY);
-
-            cover1.setOnClickListener(new View.OnClickListener() {
+        /*    cover1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int theCard = Integer.parseInt((String) view.getTag());
@@ -247,7 +260,77 @@ public class Game extends AppCompatActivity {
                     int theCard = Integer.parseInt((String) view.getTag());
                     doStuff(cover12, theCard);
                 }
-            });
+            });*/
+    }
+
+
+    private void setView(int size){
+       invisible();
+        if(size ==  4){
+            cover1.setVisibility(View.VISIBLE);
+            cover2.setVisibility(View.VISIBLE);
+            cover3.setVisibility(View.VISIBLE);
+            cover4.setVisibility(View.VISIBLE);
+        }else if(size == 6){
+            cover1.setVisibility(View.VISIBLE);
+            cover2.setVisibility(View.VISIBLE);
+            cover3.setVisibility(View.VISIBLE);
+            cover4.setVisibility(View.VISIBLE);
+            cover5.setVisibility(View.VISIBLE);
+            cover6.setVisibility(View.VISIBLE);
+        }else if(size == 8){
+            cover1.setVisibility(View.VISIBLE);
+            cover2.setVisibility(View.VISIBLE);
+            cover3.setVisibility(View.VISIBLE);
+            cover4.setVisibility(View.VISIBLE);
+            cover5.setVisibility(View.VISIBLE);
+            cover6.setVisibility(View.VISIBLE);
+            cover7.setVisibility(View.VISIBLE);
+            cover8.setVisibility(View.VISIBLE);
+        }else if(size == 10){
+            cover1.setVisibility(View.VISIBLE);
+            cover2.setVisibility(View.VISIBLE);
+            cover3.setVisibility(View.VISIBLE);
+            cover4.setVisibility(View.VISIBLE);
+            cover5.setVisibility(View.VISIBLE);
+            cover6.setVisibility(View.VISIBLE);
+            cover7.setVisibility(View.VISIBLE);
+            cover8.setVisibility(View.VISIBLE);
+            cover9.setVisibility(View.VISIBLE);
+            cover10.setVisibility(View.VISIBLE);
+        }else if(size == 12){
+            cover1.setVisibility(View.VISIBLE);
+            cover2.setVisibility(View.VISIBLE);
+            cover3.setVisibility(View.VISIBLE);
+            cover4.setVisibility(View.VISIBLE);
+            cover5.setVisibility(View.VISIBLE);
+            cover6.setVisibility(View.VISIBLE);
+            cover7.setVisibility(View.VISIBLE);
+            cover8.setVisibility(View.VISIBLE);
+            cover9.setVisibility(View.VISIBLE);
+            cover10.setVisibility(View.VISIBLE);
+            cover11.setVisibility(View.VISIBLE);
+            cover12.setVisibility(View.VISIBLE);
+
+        }else if(size == 14){
+
+        }else if(size == 16){
+
+        }else if(size == 18){
+
+        }else if(size == 20){
+
+        }
+
+    }
+    private  void ButtonEvent(final ImageView cover){
+        cover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int theCard = Integer.parseInt((String) view.getTag());
+                doStuff(cover, theCard);
+            }
+        });
     }
     private void doStuff(ImageView cover, int num){
         //rotateAnimation = AnimationUtils.loadAnimation(this,R.anim.rotate);
@@ -313,6 +396,17 @@ public class Game extends AppCompatActivity {
             cardArray[i] = temp;
         }
     }
+    private void getCard(int size){
+        int count = 0;
+        for(int i = (size/2) -1; i < size; i++){
+                 if(cardArray[count] > 100 && cardArray[count] < 200){
+                     cardArray[i] = cardArray[count] +100;
+                 }else if(cardArray[count] < 200){
+                     cardArray[i] = cardArray[count] -100;
+                 }
+                 count++;
+        }
+    }
     private void calculate(){
 
         if(firstCard == secondCard){
@@ -321,7 +415,6 @@ public class Game extends AppCompatActivity {
                     playerPoints++;
                     text_p1.setText("Player 1: " +playerPoints);
                     text_p1.setTextColor(Color.GREEN);
-
         }else{
             reset();
                 if(playerPoints > 0){
@@ -366,7 +459,6 @@ public class Game extends AppCompatActivity {
             });
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
-
         }
     }
 
@@ -378,7 +470,6 @@ public class Game extends AppCompatActivity {
         image104 = R.drawable.lion;
         image105 = R.drawable.monkey;
         image106 = R.drawable.wolf;
-
         image201 = R.drawable.camel1;
         image202 = R.drawable.coala1;
         image203 = R.drawable.fox1;
@@ -433,6 +524,21 @@ public class Game extends AppCompatActivity {
         cover12.setImageResource(R.drawable.code);
     }
 
+    public void invisible(){
+        cover1.setVisibility(View.INVISIBLE);
+        cover2.setVisibility(View.INVISIBLE);
+        cover3.setVisibility(View.INVISIBLE);
+        cover4.setVisibility(View.INVISIBLE);
+        cover5.setVisibility(View.INVISIBLE);
+        cover6.setVisibility(View.INVISIBLE);
+        cover7.setVisibility(View.INVISIBLE);
+        cover8.setVisibility(View.INVISIBLE);
+        cover9.setVisibility(View.INVISIBLE);
+        cover10.setVisibility(View.INVISIBLE);
+        cover11.setVisibility(View.INVISIBLE);
+        cover12.setVisibility(View.INVISIBLE);
+
+    }
     public void stateChange(int check){
         if(check == 0){
             cover1.setVisibility(View.INVISIBLE);
@@ -473,6 +579,8 @@ public class Game extends AppCompatActivity {
         }
 
     }
+
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -489,5 +597,6 @@ public class Game extends AppCompatActivity {
         outState.putBoolean("state11", visible11);
         outState.putBoolean("state12", visible12);
         /////////////////////////////////////////////////////////////////////
+       // outState.putIntArray("currentArr", cardArray);
     }
 }
