@@ -32,14 +32,14 @@ import android.widget.EditText;
      public void NextScreen(View view) {
          EditText editText = (EditText) findViewById(R.id.edittext);
          String value = editText.getText().toString();
-
-         if(value.contains("12")) {
+         value = value.replaceAll("\\s", "");
+         int size = Integer.parseInt(value);
+         if(size % 2 == 0 && size >= 4 && size <= 20) {
              Intent intent = new Intent(MainActivity.this, Game.class);
+             intent.putExtra("size_key", value);
              startActivity(intent);
          }else{
-             Intent intent = new Intent(MainActivity.this, Game.class);
-                intent.putExtra("size_key", value);
-             startActivity(intent);
+
          }
      }
  }
