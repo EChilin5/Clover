@@ -10,11 +10,14 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -28,6 +31,7 @@ public class Game extends AppCompatActivity {
     ImageView cover1, cover2, cover3, cover4,cover5,cover6,cover7,cover8, cover9,cover10,
     cover11,cover12, cover13, cover14, cover15, cover16, cover17, cover18, cover19, cover20;
     ImageView[] img;
+    int[] card2 =  {101, 102,103,104, 105,106};
     int[] cardArray = {101, 102,103,104, 105,106, 201, 202,203,204, 205,206};
     int[] copy;
 
@@ -50,18 +54,18 @@ public class Game extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
             text_p1 = (TextView) findViewById(R.id.text_p1);
-            cover1 = findViewById(R.id.cover1);
+            cover1 =  findViewById(R.id.cover1);
             cover2 =  findViewById(R.id.cover2);
-            cover3 = findViewById(R.id.cover3);
-            cover4 = (ImageView) findViewById(R.id.cover4);
-            cover5 = (ImageView) findViewById(R.id.cover5);
-            cover6 = (ImageView) findViewById(R.id.cover6);
-            cover7 = (ImageView) findViewById(R.id.cover7);
-            cover8 = (ImageView) findViewById(R.id.cover8);
-            cover9 = (ImageView) findViewById(R.id.cover9);
-            cover10 = (ImageView) findViewById(R.id.cover10);
-            cover11 = (ImageView) findViewById(R.id.cover11);
-            cover12 = (ImageView) findViewById(R.id.cover12);
+            cover3 =  findViewById(R.id.cover3);
+            cover4 =  findViewById(R.id.cover4);
+            cover5 =  findViewById(R.id.cover5);
+            cover6 =  findViewById(R.id.cover6);
+            cover7 =  findViewById(R.id.cover7);
+            cover8 =  findViewById(R.id.cover8);
+            cover9 =  findViewById(R.id.cover9);
+            cover10 = findViewById(R.id.cover10);
+            cover11 = findViewById(R.id.cover11);
+            cover12 = findViewById(R.id.cover12);
           //  rotateAnimation();
 
 
@@ -72,102 +76,62 @@ public class Game extends AppCompatActivity {
             copy = savedInstanceState.getIntArray("location1");
             text_p1.setText(playerText);
 
-            boolean met1 = savedInstanceState.getBoolean("state1");
-            boolean met2 = savedInstanceState.getBoolean("state2");
-            boolean met3 = savedInstanceState.getBoolean("state3");
-            boolean met4 = savedInstanceState.getBoolean("state4");
-            boolean met5 = savedInstanceState.getBoolean("state5");
-            boolean met6 = savedInstanceState.getBoolean("state6");
-            boolean met7 = savedInstanceState.getBoolean("state7");
-            boolean met8 = savedInstanceState.getBoolean("state8");
-            boolean met9 = savedInstanceState.getBoolean("state9");
-            boolean met10 = savedInstanceState.getBoolean("state10");
-            boolean met11 = savedInstanceState.getBoolean("state11");
-            boolean met12 = savedInstanceState.getBoolean("state12");
-            if(met1){
-                cover1.setVisibility(View.INVISIBLE);
-                cover1.setEnabled(false);
-                visible1 = true;
-            }
-            if(met2){
-                cover2.setVisibility(View.INVISIBLE);
-                cover2.setEnabled(false);
-                visible2 = true;
-            }
-            if(met3){
-                cover3.setVisibility(View.INVISIBLE);
-                cover3.setEnabled(false);
-                visible3 = true;
+            visible1 = savedInstanceState.getBoolean("state1");
+            visible2 = savedInstanceState.getBoolean("state2");
+            visible3 = savedInstanceState.getBoolean("state3");
+            visible4 = savedInstanceState.getBoolean("state4");
+            visible5 = savedInstanceState.getBoolean("state5");
+            visible6 = savedInstanceState.getBoolean("state6");
+            visible7 = savedInstanceState.getBoolean("state7");
+            visible8 = savedInstanceState.getBoolean("state8");
+            visible9 = savedInstanceState.getBoolean("state9");
+            visible10 = savedInstanceState.getBoolean("state10");
+            visible11 = savedInstanceState.getBoolean("state11");
+            visible12 = savedInstanceState.getBoolean("state12");
 
-            }
-            if(met4){
-                cover4.setVisibility(View.INVISIBLE);
-                cover4.setEnabled(false);
-                visible4 = true;
-            }
-            if(met5){
-                cover5.setVisibility(View.INVISIBLE);
-                cover5.setEnabled(false);
-                visible5 = true;
-
-            }
-            if(met6){
-                cover6.setVisibility(View.INVISIBLE);
-                cover6.setEnabled(false);
-                visible6 = true;
-
-            }
-            if(met7){
-                cover7.setVisibility(View.INVISIBLE);
-                cover7.setEnabled(false);
-                visible7 = true;
-            }
-            if(met8){
-                cover8.setVisibility(View.INVISIBLE);
-                cover8.setEnabled(false);
-                visible8 =  true;
-            }
-            if(met9){
-                cover9.setVisibility(View.INVISIBLE);
-                cover9.setEnabled(false);
-                visible9 = true;
-            }
-            if(met10){
-                cover10.setVisibility(View.INVISIBLE);
-                cover10.setEnabled(false);
-                visible10 = true;
-            }
-            if(met11){
-                cover11.setVisibility(View.INVISIBLE);
-                cover11.setEnabled(false);
-                visible11 = true;
-            }
-            if(met12){
-                cover12.setVisibility(View.INVISIBLE);
-                cover12.setEnabled(false);
-                visible12 = true;
-            }
         }else{
             String data = getIntent().getStringExtra("size_key");
             data = data.replaceAll("\\s", "");
             size = Integer.parseInt(data);
-            shuffleCards(size);
+           DoThis();
         }
+      Call();
+    }
+    public void resetVisible(){
+        visible1 =false;
+        visible2 =false;
+        visible3 =false;
+        visible4 =false;
+        visible5 =false;
+        visible6 =false;
+        visible7 =false;
+        visible8 =false;
+        visible9 =false;
+        visible10 =false;
+        visible11 =false;
+        visible12 =false;
+    }
 
+    public void DoThis(){
+        shuffleCards(size);
+        shuffle(size);
+    }
+
+    public void Call(){
         Display(size);
 
-        setViewV2(cover1);
-        setViewV2(cover2);
-        setViewV2(cover3);
-        setViewV2(cover4);
-        setViewV2(cover5);
-        setViewV2(cover6);
-        setViewV2(cover7);
-        setViewV2(cover8);
-        setViewV2(cover9);
-        setViewV2(cover10);
-        setViewV2(cover11);
-        setViewV2(cover12);
+        setViewV2(cover1, visible1);
+        setViewV2(cover2, visible2);
+        setViewV2(cover3, visible3);
+        setViewV2(cover4, visible4);
+        setViewV2(cover5, visible5);
+        setViewV2(cover6, visible6);
+        setViewV2(cover7, visible7);
+        setViewV2(cover8, visible8);
+        setViewV2(cover9, visible9);
+        setViewV2(cover10, visible10);
+        setViewV2(cover11, visible11);
+        setViewV2(cover12, visible12);
 
         frontOfCardsResources();
         ButtonEvent(cover1);
@@ -182,11 +146,7 @@ public class Game extends AppCompatActivity {
         ButtonEvent(cover10);
         ButtonEvent(cover11);
         ButtonEvent(cover12);
-
     }
-
-
-
 
     public void Display(int size){
        String num =  Integer.toString(size);
@@ -230,12 +190,12 @@ public class Game extends AppCompatActivity {
         cover12.setTag(size);
     }
 
-    public void setTag(ImageView cover, String tag){
-        cover.setTag(tag);
-    }
-    private void setViewV2(ImageView cover){
+    private void setViewV2(ImageView cover, boolean visible){
         int theCard = Integer.parseInt((String) cover.getTag());
-        if(theCard < size){
+        if(visible){
+            cover.setVisibility(View.INVISIBLE);
+            cover.setEnabled(false);
+        } else if(theCard < size){
             cover.setEnabled(true);
             cover.setVisibility(View.VISIBLE);
         }else{
@@ -259,7 +219,7 @@ public class Game extends AppCompatActivity {
             cover.setImageResource(image101);
         }else if(copy[num] == 102){
             cover.setImageResource(image102);
-        }else if(cardArray[num] == 103){
+        }else if(copy[num] == 103){
             cover.setImageResource(image103);
         }else if(copy[num] == 104){
             cover.setImageResource(image104);
@@ -281,7 +241,7 @@ public class Game extends AppCompatActivity {
             cover.setImageResource(image206);
         }
         if(cardNumber == 1){
-            firstCard = cardArray[num];
+            firstCard = copy[num];
             if(firstCard >200){
                 firstCard =firstCard-100;
             }
@@ -289,7 +249,7 @@ public class Game extends AppCompatActivity {
             clickedFirst = num;
             cover.setEnabled(false);
         }else if(cardNumber == 2){
-            secondCard =cardArray[num];
+            secondCard =copy[num];
             if(secondCard >200){
                 secondCard =secondCard-100;
             }
@@ -306,14 +266,25 @@ public class Game extends AppCompatActivity {
         }
     }
 
+    private void shuffle(int size){
+        int temp, index;
+        Random random = new Random();
+        for(int i = copy.length-1; i> 0; i--){
+            index = random.nextInt(i+1);
+            temp = copy[index];
+            copy[index] = copy[i];
+            copy[i] = temp;
+        }
+    }
+
     private void shuffleCards(int size){
         int temp, index;
         Random random = new Random();
-        for(int i = cardArray.length-1; i> 0; i--){
+        for(int i = card2.length-1; i> 0; i--){
             index = random.nextInt(i+1);
-            temp = cardArray[index];
-            cardArray[index] = cardArray[i];
-            cardArray[i] = temp;
+            temp = card2[index];
+            card2[index] = card2[i];
+            card2[i] = temp;
         }
         getCard(size);
     }
@@ -321,16 +292,19 @@ public class Game extends AppCompatActivity {
     private void getCard(int size){
         int count = 0;
         copy = new int[size];
-        for(int i = (size/2); i < size; i++){
-                 if(cardArray[count] > 100 && cardArray[count] < 200){
-                     cardArray[i] = cardArray[count] +100;
-                 }else if(cardArray[count] > 200){
-                     cardArray[i] = cardArray[count] -100;
-                 }
-                 count++;
+        for(int i = 0; i < size/2; i++){
+            copy[i] = card2[count];
+                     count++;
         }
-        for(int i=0; i < size; i++){
-            copy[i] =cardArray[i];
+        count = 0;
+        for(int i = size/2; i < size; i++){
+            copy[i] = copy[count] +100;
+            count++;
+        }
+        for(int i=0; i < copy.length; i++){
+            copy[i] = copy[i];
+            String t = Integer.toString(copy[i]);
+            Toast.makeText(Game.this, t, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -457,25 +431,24 @@ public class Game extends AppCompatActivity {
     }
 
     private void stateChangeV2(int check){
-
         if(check == 0){
             cover2.setVisibility(View.INVISIBLE);
-            visible1 = true;
+            visible2 = true;
         } else if(check == 1){
             cover3.setVisibility(View.INVISIBLE);
-            visible2 = true;
+            visible3 = true;
         } else if(check == 2){
             cover6.setVisibility(View.INVISIBLE);
-            visible3 = true;
+            visible6 = true;
         } else if(check == 3){
             cover7.setVisibility(View.INVISIBLE);
-            visible4 = true;
+            visible7 = true;
         }else if(check == 4){
             cover10.setVisibility(View.INVISIBLE);
-            visible3 = true;
+            visible10 = true;
         } else if(check == 5){
             cover11.setVisibility(View.INVISIBLE);
-            visible4 = true;
+            visible11 = true;
         }
     }
 
@@ -544,5 +517,61 @@ public class Game extends AppCompatActivity {
         outState.putIntArray("location1", copy);
         outState.putString("player", playerText);
 
+    }
+    public void Reveal(ImageView cover, int num){
+        if(copy[num] == 101){
+            cover.setImageResource(image101);
+        }else if(copy[num] == 102){
+            cover.setImageResource(image102);
+        }else if(copy[num] == 103){
+            cover.setImageResource(image103);
+        }else if(copy[num] == 104){
+            cover.setImageResource(image104);
+        }else if(copy[num] == 105){
+            cover.setImageResource(image105);
+        }else if(copy[num] == 106){
+            cover.setImageResource(image106);
+        }else if(copy[num] == 201){
+            cover.setImageResource(image201);
+        }else if(copy[num] == 202){
+            cover.setImageResource(image202);
+        }else if(copy[num] == 203){
+            cover.setImageResource(image203);
+        }else if(copy[num] == 204){
+            cover.setImageResource(image204);
+        }else if(copy[num] == 205){
+            cover.setImageResource(image205);
+        }else if(copy[num] == 206){
+            cover.setImageResource(image206);
+        }
+    }
+
+    public void Show(ImageView cover){
+        int theCard = Integer.parseInt((String) cover.getTag());
+        if(theCard < size) {
+           Reveal(cover, theCard);
+       }
+    }
+
+    public void Answers(View view){
+        Show(cover1);
+        Show(cover2);
+        Show(cover3);
+        Show(cover4);
+        Show(cover5);
+        Show(cover6);
+        Show(cover7);
+        Show(cover8);
+        Show(cover9);
+        Show(cover10);
+        Show(cover11);
+        playerPoints = 0;
+    }
+
+    public void Reset(View view) {
+        resetVisible();
+        reset();
+        DoThis();
+        Call();
     }
 }
