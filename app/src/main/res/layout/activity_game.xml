@@ -7,7 +7,7 @@
     tools:context=".Game">
 
     <include
-        layout="@layout/image"
+        layout="@layout/imagemax"
         android:layout_width="wrap_content"
         android:layout_height="450dp"
         android:layout_centerHorizontal="true"
@@ -30,6 +30,7 @@
             android:paddingLeft="20dp"
             android:text="player 1 : 0"
             android:textSize="30sp" />
+
 
         <Button
             android:id="@+id/button_Reset"
