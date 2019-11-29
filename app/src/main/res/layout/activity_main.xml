@@ -37,20 +37,8 @@
         android:layout_width="259dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="@string/MENU_OBJECT"
+        android:text="Play Game"
         android:textSize="26sp" />
 
-    <Button
-        android:id="@+id/buttonPlay"
-        android:layout_width="250dp"
-        android:onClick="playIt"
-        android:layout_height="wrap_content"
-        android:text="Play" />
-    <Button
-        android:id="@+id/buttonStop"
-        android:layout_width="250dp"
-        android:onClick="end"
-        android:layout_height="wrap_content"
-        android:text="Stop" />
 
 </LinearLayout>
