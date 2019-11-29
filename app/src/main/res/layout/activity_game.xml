@@ -31,20 +31,5 @@
             android:text="player 1 : 0"
             android:textSize="30sp" />
 
-
-        <Button
-            android:id="@+id/button_Reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="Reset"
-            android:text="Reset" />
-
-        <Button
-            android:id="@+id/button_Show"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="Answers"
-            android:text="Show" />
-
     </LinearLayout>
 </RelativeLayout>

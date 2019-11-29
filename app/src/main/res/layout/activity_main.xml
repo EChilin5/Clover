@@ -8,6 +8,9 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
+
+
     <TextView
         android:layout_width="227dp"
         android:layout_height="58dp"
@@ -43,5 +46,11 @@
         android:onClick="playIt"
         android:layout_height="wrap_content"
         android:text="Play" />
+    <Button
+        android:id="@+id/buttonStop"
+        android:layout_width="250dp"
+        android:onClick="end"
+        android:layout_height="wrap_content"
+        android:text="Stop" />
 
 </LinearLayout>

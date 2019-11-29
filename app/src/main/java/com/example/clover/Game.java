@@ -3,11 +3,20 @@ package com.example.clover;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.PowerManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -47,7 +56,15 @@ public class Game extends AppCompatActivity {
     String playerText;
     int size;
 
+    MediaPlayer mySong;
+    HomeListener mHomeWatcher;
+    int stop = 0;
+
     Animation rotateAnimation;
+    MusicService music;
+    private MusicService mServ;
+    private boolean mIsBound = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,6 +135,73 @@ public class Game extends AppCompatActivity {
         }
         Call();
     }
+
+
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return  true;
+    }
+
+    public  boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.Play:
+                if(stop == 0) {
+                    doBindService();
+                    Intent music = new Intent();
+                    music.setClass(this, MusicService.class);
+                    startService(music);
+                }else{
+                    if (mServ != null) {
+                        mServ.startMusic();
+                        stop = 0;
+                    }
+                }
+                return true;
+            case R.id.Stop:
+                if (mServ != null) {
+                    mServ.stopMusic();
+                    stop=1;
+                }
+                return true;
+            case R.id.Show:
+                Show(cover1);
+                Show(cover2);
+                Show(cover3);
+                Show(cover4);
+                Show(cover5);
+                Show(cover6);
+                Show(cover7);
+                Show(cover8);
+                Show(cover9);
+                Show(cover10);
+                Show(cover11);
+                Show(cover12);
+                Show(cover13);
+                Show(cover14);
+                Show(cover15);
+                Show(cover16);
+                Show(cover17);
+                Show(cover18);
+                Show(cover19);
+                Show(cover20);
+                playerPoints = 0;
+                playerText = "Player 1: " + playerPoints;
+                text_p1.setText(playerText);
+
+                return true;
+            case R.id.Reset:
+                resetVisible();
+                reset();
+                DoThis();
+                Call();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void resetVisible() {
         visible1 = false;
@@ -776,4 +860,75 @@ public class Game extends AppCompatActivity {
         DoThis();
         Call();
     }
-}
+
+    ////////////////////////////////////////////////////////////////////////
+    public void PauseMusic(View view) {
+       // super.onPause();
+
+        if (mServ != null) {
+            mServ.stopMusic();
+        }
+        }
+
+    private ServiceConnection Scon =new ServiceConnection(){
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mServ != null) {
+            mServ.resumeMusic();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        doUnbindService();
+        Intent music = new Intent();
+        music.setClass(this,MusicService.class);
+        stopService(music);
+
+    }
+    protected void onPause() {
+        super.onPause();
+
+        PowerManager pm = (PowerManager)
+                getSystemService(Context.POWER_SERVICE);
+        boolean isScreenOn = false;
+        if (pm != null) {
+            isScreenOn = pm.isScreenOn();
+        }
+
+        if (!isScreenOn) {
+            if (mServ != null) {
+                mServ.pauseMusic();
+            }
+        }
+
+    }
+    }
