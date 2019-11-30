@@ -38,11 +38,10 @@ public class Game extends AppCompatActivity {
             cover11, cover12, cover13, cover14, cover15, cover16, cover17, cover18, cover19, cover20;
     ImageView[] img;
     int[] card2 = {101, 102, 103, 104, 105, 106, 107, 108, 109, 110};
-    int[] cardArray = {101, 102, 103, 104, 105, 106, 201, 202, 203, 204, 205, 206};
     int[] copy;
 
-    int image101, image102, image103, image104, image105, image106,image107, image108, image109, image110,
-            image201, image202, image203, image204, image205, image206, image207, image208, image209,  image210;
+    int image101, image102, image103, image104, image105, image106, image107, image108, image109, image110,
+            image201, image202, image203, image204, image205, image206, image207, image208, image209, image210;
 
     private boolean visible1 = false, visible2 = false, visible3 = false, visible4 = false, visible5 = false, visible6 = false,
             visible7 = false, visible8 = false, visible9 = false, visible10 = false, visible11 = false, visible12 = false,
@@ -52,9 +51,12 @@ public class Game extends AppCompatActivity {
     int firstCard, secondCard;
     int clickedFirst, clickedSecond;
     int cardNumber = 1;
-    int playerPoints = 0, cpuPoints = 0;
+    int playerPoints = 4000, cpuPoints = 0;
     String playerText;
     int size;
+
+    int missedPoint = 1;
+    int corectPoint = 1;
 
     MediaPlayer mySong;
     HomeListener mHomeWatcher;
@@ -98,8 +100,9 @@ public class Game extends AppCompatActivity {
 
         reset();
 
-
         if (savedInstanceState != null) {
+            missedPoint = savedInstanceState.getInt("missed");
+            corectPoint = savedInstanceState.getInt("correct");
             playerPoints = savedInstanceState.getInt("points");
             playerText = savedInstanceState.getString("player");
             size = savedInstanceState.getInt("size");
@@ -131,28 +134,29 @@ public class Game extends AppCompatActivity {
             String data = getIntent().getStringExtra("size_key");
             data = data.replaceAll("\\s", "");
             size = Integer.parseInt(data);
+            playerText = "Player 1: " + playerPoints;
+            text_p1.setText(playerText);
             DoThis();
         }
         Call();
     }
 
 
-
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
-        return  true;
+        return true;
     }
 
-    public  boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.Play:
-                if(stop == 0) {
+                if (stop == 0) {
                     doBindService();
                     Intent music = new Intent();
                     music.setClass(this, MusicService.class);
                     startService(music);
-                }else{
+                } else {
                     if (mServ != null) {
                         mServ.startMusic();
                         stop = 0;
@@ -162,7 +166,7 @@ public class Game extends AppCompatActivity {
             case R.id.Stop:
                 if (mServ != null) {
                     mServ.stopMusic();
-                    stop=1;
+                    stop = 1;
                 }
                 return true;
             case R.id.Show:
@@ -384,7 +388,7 @@ public class Game extends AppCompatActivity {
             cover.setImageResource(image105);
         } else if (copy[num] == 106) {
             cover.setImageResource(image106);
-        }  else if (copy[num] == 107) {
+        } else if (copy[num] == 107) {
             cover.setImageResource(image107);
         } else if (copy[num] == 108) {
             cover.setImageResource(image108);
@@ -392,7 +396,7 @@ public class Game extends AppCompatActivity {
             cover.setImageResource(image109);
         } else if (copy[num] == 110) {
             cover.setImageResource(image110);
-        }  else if (copy[num] == 201) {
+        } else if (copy[num] == 201) {
             cover.setImageResource(image201);
         } else if (copy[num] == 202) {
             cover.setImageResource(image202);
@@ -483,25 +487,38 @@ public class Game extends AppCompatActivity {
 
     private void calculate() {
         if (firstCard == secondCard) {
-            if (size == 4 || size == 6 || size == 8 || size ==10) {
+            if (size == 4 || size == 6 || size == 8 || size == 10) {
                 stateChangeV2(clickedFirst);
                 stateChangeV2(clickedSecond);
             } else {
                 stateChange(clickedFirst);
                 stateChange(clickedSecond);
             }
-            playerPoints++;
+            playerPoints += (100 * corectPoint);
+            corectPoint++;
             playerText = "Player 1: " + playerPoints;
             text_p1.setText(playerText);
             text_p1.setTextColor(Color.GREEN);
+            if (missedPoint != 1) {
+                missedPoint--;
+            }
         } else {
             reset();
+
             if (playerPoints > 0) {
-                playerPoints--;
-                playerText = "Player 1: " + playerPoints;
-                text_p1.setText(playerText);
-                text_p1.setTextColor(Color.RED);
+                playerPoints -= (50 * 2 * missedPoint);
+                missedPoint++;
             }
+            if (playerPoints < 0) {
+                playerPoints = 0;
+                if (missedPoint != 1) {
+                    missedPoint--;
+                }
+            }
+            playerText = "Player 1: " + playerPoints;
+            text_p1.setText(playerText);
+            text_p1.setTextColor(Color.RED);
+
         }
         Enable(true);
         checkEnd();
@@ -570,9 +587,9 @@ public class Game extends AppCompatActivity {
         image205 = R.drawable.hl;
         image206 = R.drawable.sts;
         image207 = R.drawable.dgl;
-        image208 =  R.drawable.ss;
+        image208 = R.drawable.ss;
         image209 = R.drawable.wwl;
-        image210 = R.drawable.yugi ;
+        image210 = R.drawable.yugi;
     }
 
     private void rotateAnimation() {
@@ -774,6 +791,8 @@ public class Game extends AppCompatActivity {
         outState.putInt("points", playerPoints);
         outState.putIntArray("location1", copy);
         outState.putString("player", playerText);
+        outState.putInt("correct" , corectPoint);
+        outState.putInt("missed", missedPoint);
 
     }
 
@@ -790,7 +809,7 @@ public class Game extends AppCompatActivity {
             cover.setImageResource(image105);
         } else if (copy[num] == 106) {
             cover.setImageResource(image106);
-        }else if (copy[num] == 107) {
+        } else if (copy[num] == 107) {
             cover.setImageResource(image107);
         } else if (copy[num] == 108) {
             cover.setImageResource(image108);
@@ -810,7 +829,7 @@ public class Game extends AppCompatActivity {
             cover.setImageResource(image205);
         } else if (copy[num] == 206) {
             cover.setImageResource(image206);
-        }else if (copy[num] == 207) {
+        } else if (copy[num] == 207) {
             cover.setImageResource(image207);
         } else if (copy[num] == 208) {
             cover.setImageResource(image208);
@@ -828,53 +847,21 @@ public class Game extends AppCompatActivity {
         }
     }
 
-    public void Answers(View view) {
-        Show(cover1);
-        Show(cover2);
-        Show(cover3);
-        Show(cover4);
-        Show(cover5);
-        Show(cover6);
-        Show(cover7);
-        Show(cover8);
-        Show(cover9);
-        Show(cover10);
-        Show(cover11);
-        Show(cover12);
-        Show(cover13);
-        Show(cover14);
-        Show(cover15);
-        Show(cover16);
-        Show(cover17);
-        Show(cover18);
-        Show(cover19);
-        Show(cover20);
-        playerPoints = 0;
-        playerText = "Player 1: " + playerPoints;
-        text_p1.setText(playerText);
-    }
-
-    public void Reset(View view) {
-        resetVisible();
-        reset();
-        DoThis();
-        Call();
-    }
 
     ////////////////////////////////////////////////////////////////////////
     public void PauseMusic(View view) {
-       // super.onPause();
+        // super.onPause();
 
         if (mServ != null) {
             mServ.stopMusic();
         }
-        }
+    }
 
-    private ServiceConnection Scon =new ServiceConnection(){
+    private ServiceConnection Scon = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName name, IBinder
                 binder) {
-            mServ = ((MusicService.ServiceBinder)binder).getService();
+            mServ = ((MusicService.ServiceBinder) binder).getService();
         }
 
         public void onServiceDisconnected(ComponentName name) {
@@ -882,20 +869,19 @@ public class Game extends AppCompatActivity {
         }
     };
 
-    void doBindService(){
-        bindService(new Intent(this,MusicService.class),
+    void doBindService() {
+        bindService(new Intent(this, MusicService.class),
                 Scon, Context.BIND_AUTO_CREATE);
         mIsBound = true;
     }
 
-    void doUnbindService()
-    {
-        if(mIsBound)
-        {
+    void doUnbindService() {
+        if (mIsBound) {
             unbindService(Scon);
             mIsBound = false;
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -904,16 +890,18 @@ public class Game extends AppCompatActivity {
             mServ.resumeMusic();
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
         doUnbindService();
         Intent music = new Intent();
-        music.setClass(this,MusicService.class);
+        music.setClass(this, MusicService.class);
         stopService(music);
 
     }
+
     protected void onPause() {
         super.onPause();
 
@@ -931,4 +919,4 @@ public class Game extends AppCompatActivity {
         }
 
     }
-    }
+}
