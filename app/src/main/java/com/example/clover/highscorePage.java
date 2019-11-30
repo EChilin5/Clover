@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -22,7 +23,10 @@ public class highscorePage extends AppCompatActivity {
     TextView scoreOne,scoreTwo,scoreThree,scoreFour,scoreFive,playerOne,playerTwo,playerThree,playerFour,playerFive;
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.highscores);
         scoreOne = findViewById(R.id.score1);
         scoreTwo = findViewById(R.id.score2);
