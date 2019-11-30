@@ -40,7 +40,7 @@
     <Button
         android:id="@+id/buttonPlay"
         android:layout_width="250dp"
-        android:onClick="playIt"
+        android:onClick="highscoresView"
         android:layout_height="wrap_content"
         android:text="Play" />
 

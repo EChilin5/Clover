@@ -26,7 +26,6 @@ import java.util.Random;
 
 
 public class Game extends AppCompatActivity {
-
     TextView text_p1, text_p2;
     ImageView cover1, cover2, cover3, cover4,cover5,cover6,cover7,cover8, cover9,cover10,
     cover11,cover12, cover13, cover14, cover15, cover16, cover17, cover18, cover19, cover20;
@@ -46,14 +45,12 @@ public class Game extends AppCompatActivity {
     int playerPoints =0, cpuPoints =0;
     String playerText;
     int size;
-
     Animation rotateAnimation;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-            text_p1 = (TextView) findViewById(R.id.text_p1);
+            text_p1 = findViewById(R.id.text_p1);
             cover1 =  findViewById(R.id.cover1);
             cover2 =  findViewById(R.id.cover2);
             cover3 =  findViewById(R.id.cover3);

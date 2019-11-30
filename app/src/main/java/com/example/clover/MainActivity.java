@@ -8,26 +8,37 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
  public class MainActivity extends AppCompatActivity {
     private Button button4x4;
-    MediaPlayer mySong;
-
+    EditText userName,userPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mySong = MediaPlayer.create(MainActivity.this, R.raw.song);
+        userName= findViewById(R.id.userName);
+        userPassword=findViewById(R.id.userPassword);
+
+    }
+
+     public void OnLogin(View view){
+         String username= userName.getText().toString();
+         String password=userPassword.getText().toString();
+         ((userWorker)this.getApplication()).setUsername(username);
+         ((userWorker)this.getApplication()).setPassword(password);
+         String type="login";
+         loginWorker loginWorker= new loginWorker(this);
+         loginWorker.execute(type,username,password);
+     }
+     public void highscoresView(View view){
+        Intent intent= new Intent(MainActivity.this, highscorePage.class);
+        startActivity(intent);
     }
 
 
-    public void playIt(View v){
-        mySong.start();
-    }
-    public void onPause(){
-        super.onPause();
-        mySong.release();
-    }
+
+
 
      public void NextScreen(View view) {
          EditText editText = (EditText) findViewById(R.id.edittext);
