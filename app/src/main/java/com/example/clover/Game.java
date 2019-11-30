@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import java.util.Random;
 public class Game extends AppCompatActivity {
 
     TextView text_p1, text_p2;
+    ImageButton submitbutton;
     ImageView cover1, cover2, cover3, cover4, cover5, cover6, cover7, cover8, cover9, cover10,
             cover11, cover12, cover13, cover14, cover15, cover16, cover17, cover18, cover19, cover20;
     ImageView[] img;
@@ -72,11 +74,7 @@ public class Game extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         text_p1 = findViewById(R.id.text_p1);
-
         cover1 = findViewById(R.id.cover1);
         cover2 = findViewById(R.id.cover2);
         cover3 = findViewById(R.id.cover3);
@@ -97,6 +95,7 @@ public class Game extends AppCompatActivity {
         cover18 = findViewById(R.id.cover18);
         cover19 = findViewById(R.id.cover19);
         cover20 = findViewById(R.id.cover20);
+        submitbutton=findViewById(R.id.submitbutton);
 
         reset();
 
@@ -134,7 +133,7 @@ public class Game extends AppCompatActivity {
             String data = getIntent().getStringExtra("size_key");
             data = data.replaceAll("\\s", "");
             size = Integer.parseInt(data);
-            playerText = "Player 1: " + playerPoints;
+            playerText = "LP\n " + playerPoints;
             text_p1.setText(playerText);
             DoThis();
         }
@@ -191,7 +190,7 @@ public class Game extends AppCompatActivity {
                 Show(cover19);
                 Show(cover20);
                 playerPoints = 0;
-                playerText = "Player 1: " + playerPoints;
+                playerText = " LP\n " + playerPoints;
                 text_p1.setText(playerText);
 
                 return true;
@@ -481,7 +480,6 @@ public class Game extends AppCompatActivity {
         for (int i = 0; i < copy.length; i++) {
             copy[i] = copy[i];
             String t = Integer.toString(copy[i]);
-            Toast.makeText(Game.this, t, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -496,9 +494,8 @@ public class Game extends AppCompatActivity {
             }
             playerPoints += (100 * corectPoint);
             corectPoint++;
-            playerText = "Player 1: " + playerPoints;
+            playerText = "LP\n " + playerPoints;
             text_p1.setText(playerText);
-            text_p1.setTextColor(Color.GREEN);
             if (missedPoint != 1) {
                 missedPoint--;
             }
@@ -515,15 +512,19 @@ public class Game extends AppCompatActivity {
                     missedPoint--;
                 }
             }
-            playerText = "Player 1: " + playerPoints;
+            playerText = "LP\n " + playerPoints;
             text_p1.setText(playerText);
-            text_p1.setTextColor(Color.RED);
 
         }
         Enable(true);
         checkEnd();
     }
-
+    public void scoreSubmit(View view){
+        String score= Integer.toString(playerPoints);
+        Intent intent = new Intent(getBaseContext(),submissionPage.class);
+        intent.putExtra("SCORE", score);
+        startActivity(intent);
+    }
     private void checkEnd() {
         if (cover1.getVisibility() == View.INVISIBLE &&
                 cover2.getVisibility() == View.INVISIBLE &&
@@ -545,26 +546,8 @@ public class Game extends AppCompatActivity {
                 cover18.getVisibility() == View.INVISIBLE &&
                 cover19.getVisibility() == View.INVISIBLE &&
                 cover20.getVisibility() == View.INVISIBLE) {
-            rotateAnimation();
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Game.this);
-            alertDialogBuilder.setMessage("Game over")
-                    .setCancelable(false)
-                    .setPositiveButton("New", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    })
-                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            finish();
-                        }
-                    });
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+                rotateAnimation();
+                submitbutton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -579,7 +562,6 @@ public class Game extends AppCompatActivity {
         image108 = R.drawable.ss;
         image109 = R.drawable.wwl;
         image110 = R.drawable.yugi;
-
         image201 = R.drawable.darkmagician;
         image202 = R.drawable.blue_eyes;
         image203 = R.drawable.karibu;

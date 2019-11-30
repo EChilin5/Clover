@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@null"
+        android:onClick="highscoresView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +78,6 @@
     android:layout_height="wrap_content"
     android:id="@+id/difficultyDisplayText"
     android:visibility="invisible"
-android:text="@string/app_name"
-    ></TextView>
+    android:text=""
+    tools:ignore="MissingConstraints"></TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -155,6 +155,10 @@ public  boolean onOptionsItemSelected(MenuItem item){
 
          }
      }
+public void highscoresView(View view){
+         Intent intent = new Intent(MainActivity.this,highscorePage.class);
+         startActivity(intent);
+}
 
      public void end(View view) {
          if (mServ != null) {
