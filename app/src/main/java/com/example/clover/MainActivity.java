@@ -1,4 +1,4 @@
- package com.example.clover;
+package com.example.clover;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,94 +21,105 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
- public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private Button button4x4;
     MediaPlayer mySong;
-     HomeListener mHomeWatcher;
-     int stop = 0;
+    HomeListener mHomeWatcher;
+    int stop = 0;
 
-     @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-         SeekBar seekBar = findViewById(R.id.seekBar);
-         final ImageView difficultyDisplay= findViewById(R.id.difficultyDisplay);
-         final TextView difficultyDisplayText= findViewById(R.id.difficultyDisplayText);
+        SeekBar seekBar = findViewById(R.id.seekBar);
+        final ImageView difficultyDisplay = findViewById(R.id.difficultyDisplay);
+        final TextView difficultyDisplayText = findViewById(R.id.difficultyDisplayText);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progress;
-             @Override
 
-             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                 progress=i;
-                 String text=Integer.toString(i);
-                 difficultyDisplayText.setText(text);
-                 if(progress==1){difficultyDisplay.setImageResource(R.drawable.level1);}
-                 else if(progress==2){difficultyDisplay.setImageResource(R.drawable.level2);}
-                 else if(progress==3){difficultyDisplay.setImageResource(R.drawable.level3);}
-                 else if(progress==4){difficultyDisplay.setImageResource(R.drawable.level4);}
-                 else if(progress==5){difficultyDisplay.setImageResource(R.drawable.level5);}
-                 else if(progress==6){difficultyDisplay.setImageResource(R.drawable.level6);}
-                 else if(progress==7){difficultyDisplay.setImageResource(R.drawable.level7);}
-                 else if(progress==8){difficultyDisplay.setImageResource(R.drawable.level8);}
-                 else if(progress==9){difficultyDisplay.setImageResource(R.drawable.level9);}
-                 else if(progress==10){difficultyDisplay.setImageResource(R.drawable.level10);}
-                 }
+            @Override
+
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                progress = i;
+                String text = Integer.toString(i);
+                difficultyDisplayText.setText(text);
+                if (progress == 1) {
+                    difficultyDisplay.setImageResource(R.drawable.level1);
+                } else if (progress == 2) {
+                    difficultyDisplay.setImageResource(R.drawable.level2);
+                } else if (progress == 3) {
+                    difficultyDisplay.setImageResource(R.drawable.level3);
+                } else if (progress == 4) {
+                    difficultyDisplay.setImageResource(R.drawable.level4);
+                } else if (progress == 5) {
+                    difficultyDisplay.setImageResource(R.drawable.level5);
+                } else if (progress == 6) {
+                    difficultyDisplay.setImageResource(R.drawable.level6);
+                } else if (progress == 7) {
+                    difficultyDisplay.setImageResource(R.drawable.level7);
+                } else if (progress == 8) {
+                    difficultyDisplay.setImageResource(R.drawable.level8);
+                } else if (progress == 9) {
+                    difficultyDisplay.setImageResource(R.drawable.level9);
+                } else if (progress == 10) {
+                    difficultyDisplay.setImageResource(R.drawable.level10);
+                }
+            }
 
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
+            }
 
-             @Override
-             public void onStartTrackingTouch(SeekBar seekBar) {
-
-             }
-
-             @Override
-             public void onStopTrackingTouch(SeekBar seekBar) {
-             }
-         });
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
         mySong = MediaPlayer.create(MainActivity.this, R.raw.song);
 
-         MenuItem secondItem = (MenuItem) findViewById(R.id.Show);
+        MenuItem secondItem = (MenuItem) findViewById(R.id.Show);
 //        secondItem.setVisible(false);
 
-         MenuItem thirdItem = (MenuItem) findViewById(R.id.Reset);
- //        thirdItem.setVisible(false);
+        MenuItem thirdItem = (MenuItem) findViewById(R.id.Reset);
+        //        thirdItem.setVisible(false);
 
-         mHomeWatcher = new HomeListener(this);
-         mHomeWatcher.setOnHomePressedListener(new HomeListener.OnHomePressedListener() {
-             @Override
-             public void onHomePressed() {
-                 if (mServ != null) {
-                     mServ.pauseMusic();
-                 }
-             }
-             @Override
-             public void onHomeLongPressed() {
-                 if (mServ != null) {
-                     mServ.pauseMusic();
-                 }
-             }
-         });
-         mHomeWatcher.startWatch();
+        mHomeWatcher = new HomeListener(this);
+        mHomeWatcher.setOnHomePressedListener(new HomeListener.OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+
+            @Override
+            public void onHomeLongPressed() {
+                if (mServ != null) {
+                    mServ.pauseMusic();
+                }
+            }
+        });
+        mHomeWatcher.startWatch();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
-        return  true;
+        return true;
     }
 
-public  boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.Play:
-                if(stop == 0) {
+                if (stop == 0) {
                     doBindService();
                     Intent music = new Intent();
                     music.setClass(this, MusicService.class);
                     startService(music);
-                }else{
+                } else {
                     if (mServ != null) {
                         mServ.startMusic();
                         stop = 0;
@@ -118,23 +129,23 @@ public  boolean onOptionsItemSelected(MenuItem item){
             case R.id.Stop:
                 if (mServ != null) {
                     mServ.stopMusic();
-                    stop=1;
+                    stop = 1;
                 }
                 return true;
 
         }
 
-         return super.onOptionsItemSelected(item);
-}
+        return super.onOptionsItemSelected(item);
+    }
 
 
-    public void playIt(View v){
-        if(stop == 0) {
+    public void playIt(View v) {
+        if (stop == 0) {
             doBindService();
             Intent music = new Intent();
             music.setClass(this, MusicService.class);
             startService(music);
-        }else{
+        } else {
             if (mServ != null) {
                 mServ.startMusic();
                 stop = 0;
@@ -142,94 +153,96 @@ public  boolean onOptionsItemSelected(MenuItem item){
         }
     }
 
-     public void NextScreen(View view) {
-         TextView difficultyDisplayText=findViewById(R.id.difficultyDisplayText);
-         String value = difficultyDisplayText.getText().toString();
-         int size = Integer.parseInt(value)*2;
-         value=Integer.toString(size);
-         if(size % 2 == 0 && size >= 4 && size <= 20) {
-             Intent intent = new Intent(MainActivity.this, Game.class);
-             intent.putExtra("size_key", value);
-             startActivity(intent);
-         }else{
+    public void NextScreen(View view) {
+        TextView difficultyDisplayText = findViewById(R.id.difficultyDisplayText);
+        String value = difficultyDisplayText.getText().toString();
+        int size = Integer.parseInt(value) * 2;
+        value = Integer.toString(size);
+        if (size % 2 == 0 && size <= 20) {
+            Intent intent = new Intent(MainActivity.this, Game.class);
+            intent.putExtra("size_key", value);
+            startActivity(intent);
+        } else {
 
-         }
-     }
-public void highscoresView(View view){
-         Intent intent = new Intent(MainActivity.this,highscorePage.class);
-         startActivity(intent);
+        }
+    }
+
+    public void highscoresView(View view) {
+        Intent intent = new Intent(MainActivity.this, highscorePage.class);
+        startActivity(intent);
+    }
+
+    public void end(View view) {
+        if (mServ != null) {
+            mServ.stopMusic();
+            stop = 1;
+        }
+
+    }
+
+
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon = new ServiceConnection() {
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder) binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService() {
+        bindService(new Intent(this, MusicService.class),
+                Scon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService() {
+        if (mIsBound) {
+            unbindService(Scon);
+            mIsBound = false;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mServ != null) {
+            mServ.resumeMusic();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        doUnbindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        stopService(music);
+
+    }
+
+    protected void onPause() {
+        super.onPause();
+
+        PowerManager pm = (PowerManager)
+                getSystemService(Context.POWER_SERVICE);
+        boolean isScreenOn = false;
+        if (pm != null) {
+            isScreenOn = pm.isScreenOn();
+        }
+
+        if (!isScreenOn) {
+            if (mServ != null) {
+                mServ.pauseMusic();
+            }
+        }
+
+    }
 }
-
-     public void end(View view) {
-         if (mServ != null) {
-             mServ.stopMusic();
-             stop=1;
-         }
-
-     }
-
-
-     private boolean mIsBound = false;
-     private MusicService mServ;
-     private ServiceConnection Scon =new ServiceConnection(){
-
-         public void onServiceConnected(ComponentName name, IBinder
-                 binder) {
-             mServ = ((MusicService.ServiceBinder)binder).getService();
-         }
-
-         public void onServiceDisconnected(ComponentName name) {
-             mServ = null;
-         }
-     };
-
-     void doBindService(){
-         bindService(new Intent(this,MusicService.class),
-                 Scon, Context.BIND_AUTO_CREATE);
-         mIsBound = true;
-     }
-
-     void doUnbindService()
-     {
-         if(mIsBound)
-         {
-             unbindService(Scon);
-             mIsBound = false;
-         }
-     }
-     @Override
-     protected void onResume() {
-         super.onResume();
-
-         if (mServ != null) {
-             mServ.resumeMusic();
-         }
-     }
-     @Override
-     protected void onDestroy() {
-         super.onDestroy();
-
-         doUnbindService();
-         Intent music = new Intent();
-         music.setClass(this,MusicService.class);
-         stopService(music);
-
-     }
-     protected void onPause() {
-         super.onPause();
-
-         PowerManager pm = (PowerManager)
-                 getSystemService(Context.POWER_SERVICE);
-         boolean isScreenOn = false;
-         if (pm != null) {
-             isScreenOn = pm.isScreenOn();
-         }
-
-         if (!isScreenOn) {
-             if (mServ != null) {
-                 mServ.pauseMusic();
-             }
-         }
-
-     }
- }
