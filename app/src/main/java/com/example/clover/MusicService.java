@@ -31,7 +31,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     public void onCreate() {
         super.onCreate();
 
-        mPlayer = MediaPlayer.create(this, R.raw.song); //replace with your song name!
+        mPlayer = MediaPlayer.create(this, R.raw.song);
         mPlayer.setOnErrorListener(this);
 
         if (mPlayer != null) {
