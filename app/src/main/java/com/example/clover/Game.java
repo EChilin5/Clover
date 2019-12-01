@@ -38,7 +38,6 @@ public class Game extends AppCompatActivity {
     ImageButton submitbutton;
     ImageView cover1, cover2, cover3, cover4, cover5, cover6, cover7, cover8, cover9, cover10,
             cover11, cover12, cover13, cover14, cover15, cover16, cover17, cover18, cover19, cover20;
-    ImageView[] img;
     int[] card2 = {101, 102, 103, 104, 105, 106, 107, 108, 109, 110};
     int[] copy;
 
@@ -96,6 +95,7 @@ public class Game extends AppCompatActivity {
         cover19 = findViewById(R.id.cover19);
         cover20 = findViewById(R.id.cover20);
         submitbutton=findViewById(R.id.submitbutton);
+        submitbutton.setVisibility(View.VISIBLE);
 
         reset();
 
@@ -163,10 +163,15 @@ public class Game extends AppCompatActivity {
                 }
                 return true;
             case R.id.Stop:
-                if (mServ != null) {
-                    mServ.stopMusic();
-                    stop = 1;
-                }
+                int count =0;
+                    if (mServ != null) {
+                        doBindService();
+                        Intent music = new Intent();
+                        music.setClass(this, MusicService.class);
+                        startService(music);
+                        mServ.stopMusic();
+                        stop = 1;
+                    }
                 return true;
             case R.id.Show:
                 Show(cover1);
@@ -284,11 +289,13 @@ public class Game extends AppCompatActivity {
     public void Display(int size) {
         String num = Integer.toString(size);
         UpdateTag(num);
-        if (size == 4 || size == 6 || size == 10 || size == 8) {
+        if (size == 4 || size == 6 || size == 10 || size == 8 || size == 2) {
             cover2.setTag("0");
             cover3.setTag("1");
-            cover6.setTag("2");
-            cover7.setTag("3");
+            if(size >= 2) {
+                cover6.setTag("2");
+                cover7.setTag("3");
+            }
             if (size >= 6) {
                 cover10.setTag("4");
                 cover11.setTag("5");
@@ -485,7 +492,7 @@ public class Game extends AppCompatActivity {
 
     private void calculate() {
         if (firstCard == secondCard) {
-            if (size == 4 || size == 6 || size == 8 || size == 10) {
+            if (size == 2 || size == 4 || size == 6 || size == 8 || size == 10) {
                 stateChangeV2(clickedFirst);
                 stateChangeV2(clickedSecond);
             } else {
@@ -831,13 +838,6 @@ public class Game extends AppCompatActivity {
 
 
     ////////////////////////////////////////////////////////////////////////
-    public void PauseMusic(View view) {
-        // super.onPause();
-
-        if (mServ != null) {
-            mServ.stopMusic();
-        }
-    }
 
     private ServiceConnection Scon = new ServiceConnection() {
 

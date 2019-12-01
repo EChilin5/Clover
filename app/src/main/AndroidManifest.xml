@@ -23,8 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".highscorePage" />
-        <activity android:name=".submissionPage"/>
+        <activity android:name=".highscorePage" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".submissionPage" android:parentActivityName=".MainActivity"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

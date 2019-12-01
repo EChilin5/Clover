@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private Button button4x4;
@@ -33,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        startService(music);
+        stop = 1;
         SeekBar seekBar = findViewById(R.id.seekBar);
         final ImageView difficultyDisplay = findViewById(R.id.difficultyDisplay);
         final TextView difficultyDisplayText = findViewById(R.id.difficultyDisplayText);
@@ -78,13 +85,7 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-        mySong = MediaPlayer.create(MainActivity.this, R.raw.song);
-
-        MenuItem secondItem = (MenuItem) findViewById(R.id.Show);
-//        secondItem.setVisible(false);
-
-        MenuItem thirdItem = (MenuItem) findViewById(R.id.Reset);
-        //        thirdItem.setVisible(false);
+      //  mySong = MediaPlayer.create(MainActivity.this, R.raw.song);
 
         mHomeWatcher = new HomeListener(this);
         mHomeWatcher.setOnHomePressedListener(new HomeListener.OnHomePressedListener() {
@@ -134,35 +135,34 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-
-    public void playIt(View v) {
-        if (stop == 0) {
-            doBindService();
-            Intent music = new Intent();
-            music.setClass(this, MusicService.class);
-            startService(music);
-        } else {
-            if (mServ != null) {
-                mServ.startMusic();
-                stop = 0;
-            }
-        }
     }
 
     public void NextScreen(View view) {
         TextView difficultyDisplayText = findViewById(R.id.difficultyDisplayText);
+        int size;
         String value = difficultyDisplayText.getText().toString();
-        int size = Integer.parseInt(value) * 2;
+        Log.d("MyApp","I am here");
+        if(value != "" && value != " ") {
+            Toast.makeText(MainActivity.this, value,
+                    Toast.LENGTH_LONG).show();
+            try {
+                size = Integer.parseInt(value) * 2;
+            }catch (Exception e){
+                size = 2;
+            }
+        }else{
+            size = 2;
+        }
         value = Integer.toString(size);
+        Toast.makeText(MainActivity.this, value,
+                Toast.LENGTH_LONG).show();
+
         if (size % 2 == 0 && size <= 20) {
             Intent intent = new Intent(MainActivity.this, Game.class);
             intent.putExtra("size_key", value);
             startActivity(intent);
-        } else {
+        }else {
 
         }
     }
